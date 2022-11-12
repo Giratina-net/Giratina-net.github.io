@@ -1,56 +1,65 @@
-<!-- Footer -->
-<footer> 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-4">
-        <h3><i class="fa fa-map-marker"></i> Contact:</h3>
-        <p class="footer-contact">
-          {{ site.company_name }} <br>
-          Phone: {{ site.telephone_number }} <br>
-          Fax: {{ site.fax_number }} <br>
-          Email: {{ site.company_email }}<br>
-        </p>
-      </div>
-      <div class="col-md-4">
-        <h3><i class="fa fa-external-link"></i> Links</h3>
-        <p><a href="/about"> About ( Who we are )</a></p>
-        <p><a href="/about"> Services ( What we do )</a></p>
-        <p><a href="/contact"> Contact ( Feel free to contact )</a></p>
-        <p><a href="/blog"> Blog ( Write to us )</a></p>
-        <p><a href="/team"> Team ( Meet the Team )</a></p> 
-      </div>
-      <div class="col-md-4">
-        <h3><i class="fa fa-heart"></i> Socialize</h3>
-        <div id="social-icons">
-          {% if site.googleplus_link %}
-            <a href="{{ site.googleplus_link }}" class="btn-group google-plus">
-              <i class="fa fa-google-plus"></i>
-            </a>
-          {% endif %}
+<footer class="site-footer">
+  <div class="wrapper">
+    <div class="footer-col-wrapper">
+      <div class="footer-col footer-col-1">
+        <h4>CONTACT</h4>
 
-          {% if site.linkedin_link %}
-            <a href="{{ site.linkedin_link }}" class="btn-group linkedin">
-              <i class="fa fa-linkedin-square"></i>
-            </a>
-          {% endif %}
+        <div class="social-links">
+          {% for contact in site.footer.contact %}
+            <div class="social-link contact-links">
 
-          {% if site.facebook_link %}
-            <a href="{{ site.twitter_link }}" class="btn-group twitter">
-              <i class="fa fa-twitter"></i>
-            </a>
-          {% endif %}
+              {% assign contact_icon_path = "/assets/img/icons/" | append: contact.name | downcase | append: ".png" | absolute_url %}
+              <img
+                src="{{ contact_icon_path }}"
+                alt="{{ contact.name | downcase }}"
+              />
+              <a href="{{ contact.link }}" id="{{ contact.name | downcase }}-link">
+                {% if contact.value and contact.value != "" and contact.value != nil %}
+                  {{ contact.value }}
+                {% else %}
+                  {{ contact.name }}
+                {% endif %}
+              </a>
+            </div>
 
-          {% if site.facebook_link %}
-            <a href="{{ site.facebook_link }}" class="btn-group facebook">
-              <i class="fa fa-facebook"></i>
-            </a>
-          {% endif %}
+          {% endfor %}
         </div>
-      </div>    
+      </div>
+
+      <div class="footer-col footer-col-2">
+        <h4>FOLLOW</h4>
+
+        <div class="social-links follow-links">
+          {% for follow in site.footer.follow %}
+            <div class="social-link">
+
+              {% assign follow_icon_path = "/assets/img/icons/" | append: follow.name | downcase | append: ".png" | absolute_url %}
+              <img
+                src="{{ follow_icon_path }}"
+                alt="{{ follow.name | downcase }}"
+              />
+              <a href="{{ follow.link }}">
+                {% if follow.value and follow.value != "" and follow.value != nil %}
+                  {{ follow.value }}
+                {% else %}
+                  {{ follow.name }}
+                {% endif %}
+              </a>
+            </div>
+
+          {% endfor %}
+        </div>
+      </div>
+
+      {% if site.footer.show_powered_by == true %}
+        <div class="footer-col footer-col-3 powered-by">
+          <p>
+            powered by <a href="https://github.com/eliottvincent/bay">Bay</a> | {{ 'now' | date: "%Y" }}
+          </p>
+        </div>
+      {% endif %}
     </div>
   </div>
-
-  <div class="copyright text center">
-    <p>&copy; Copyright {{ site.time | date: '%Y' }}, <a href="#">Your Website Link</a>. <br>Theme ported by <a href="https://melvinchng.github.io/" target="_blank">Melvin Ch'ng</a></p>
-  </div>
 </footer>
+
+{% include wechat-widget.html %}
